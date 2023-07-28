@@ -67,45 +67,21 @@ def chatbot_response(message):
         message = message.lower()
         if "hello" in message or "hi" in message or "hey" in message:
             return "Hello there! How can i assist you?"
-        if "how are you" in message or "how's it going?" in message:
+        elif "how are you" in message or "how's it going?" in message:
             return "I'm just a bot, but thanks for asking!"
-        # if message.startswith("/search"): #Initiates search algorithm/processing
-        #     search_query = message[8:]
-        #     search_results = search_articles(search_query)
-        #     if search_results:
-        #         snippets = []
-        #         for article in search_results:
-        #             snippet = get_snippet(article.content, search_query)
-        #             snippets.append({"title": article.title, "snippet": snippet})
-        #             save_to_mongodb(article.title, snippet)
-        #         return snippets
-        #     else:
-        #         return "No matching articles found."
         else:
             return "I'm sorry, but I don't understand that. Can you please rephrase?"
     except Exception as e:
         error_message = "Error processing the request: " + str(e)
         return {"error": error_message}
     
-# def search_articles(query):
-#     query = query.lower()
-#     return [article for article in articles_collection.find({"content": {"$regex": query, "$options": "i"}})]
-
-# def get_snippet(content, query):
-#     index = content.lower().index(query.lower())
-#     snippet_start = max(index - 50, 0)
-#     snippet_end = min(index + 50, len(content))
-#     return content[snippet_start:snippet_end]
-
-# def save_to_mongodb(title, snippet):
-#     articles_collection.insert_one({"title": title, "snippet": snippet})
-
 # Processing the text/articles
 def preprocess_text(text):
     #Tokenize the text by splitting on whitespace and removing punctuation
     #Convert tokens to lowercase for case_insensitive search
     return [token.strip(".,!?\"'()") for token in text.lower().split()]
 
+# Build inverted index to search for the keywords
 def build_inverted_index(articles):
     inverted_index = defaultdict(list)
     for article in articles:
@@ -115,6 +91,7 @@ def build_inverted_index(articles):
                 inverted_index[token].append(article["_id"])
     return inverted_index
 
+# Search index for matching keyword and return matched articles
 def search_inverted_index(query, articles, inverted_index):
     query_tokens = preprocess_text(query)
     result_articles = set()
@@ -135,6 +112,7 @@ def search_inverted_index(query, articles, inverted_index):
         matched_articles[i].pop("_id")
     return matched_articles
 
+# Generate snippets from the matched articles
 def extract_snippets(article_text, query_tokens, snippet_length=10):
     words = article_text.split()
     query_indices = [i for i, word in enumerate(words) if word.lower() in query_tokens]
