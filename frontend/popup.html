@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html style="height: 300px; width: 600px">
+
+<head>
+  <title>Chatbot Extension</title>
+  <!-- Add Bootstrap CSS -->
+  <link rel="stylesheet" href="/static/css/bootstrap.css">
+  <link rel="stylesheet" href="/static/css/style.css">
+
+</head>
+
+<body>
+  <div id="sidebar" class="container mt-4">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <h1 class="mb-4">Chatbot</h1>
+        <div class="chatbox" id="chatbox">
+          <!-- Chat messages will be added here -->
+        </div>
+        <div class="input-group mt-3" id="inputContainer">
+          <input type="text" class="form-control" id="userInput" placeholder="Type your message...">
+          <button class="btn btn-primary" id="sendBtn">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load popup.js after the Bootstrap CSS -->
+  <script src="/static/js/bootstrap.js"></script>
+  <script src="popup.js"></script>
+</body>
+
+</html>
