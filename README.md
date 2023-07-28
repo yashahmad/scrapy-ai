@@ -32,3 +32,6 @@ It should return a message as "API live at http://localhost:8000/"
 4.Type '/scrape' so that the chatbot will scrape the current page and will give a download option to download the scraped text 
 5.Inorder to search , type '/search ' and it will return the results.
 ```
+
+https://github.com/yashahmad/scrapy-ai/assets/26409771/c5a905d6-adb5-42e0-be6e-e4985b866c90
+
